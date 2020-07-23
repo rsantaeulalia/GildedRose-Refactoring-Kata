@@ -1,19 +1,19 @@
 package com.gildedrose.item
 
 class ItemFactory {
-    fun createItem(itemName: String, sellIn: Int, quality: Int): Item {
-        return when (itemName) {
+    fun customiseItem(item: Item): CustomizedItem {
+        return when (item.name) {
             "Sulfuras, Hand of Ragnaros" -> {
-                SulfurasItem(itemName, sellIn, quality)
+                SulfurasItem(item)
             }
             "Aged Brie" -> {
-                AgedBrie(itemName, sellIn, quality)
+                AgedBrie(item)
             }
             "Backstage passes to a TAFKAL80ETC concert" -> {
-                BackstagePassesItem(itemName, sellIn, quality)
+                BackstagePassesItem(item)
             }
             else -> {
-                StandardItem(itemName, sellIn, quality)
+                StandardItem(item)
             }
         }
     }

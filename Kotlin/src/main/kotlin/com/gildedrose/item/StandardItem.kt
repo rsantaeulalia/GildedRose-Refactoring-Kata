@@ -1,12 +1,12 @@
 package com.gildedrose.item
 
-class StandardItem(name: String, sellIn: Int, quality: Int) : Item(name, sellIn, quality) {
-    override fun updateYourState() {
-        sellIn -= 1
-        quality -= if (sellIn > 0) {
-            1
+class StandardItem(val item: Item) : CustomizedItem {
+    override fun updateState() {
+        item.sellIn -= 1;
+        if (item.sellIn > 0) {
+            item.quality -= 1;
         } else {
-            2
+            item.quality -= 2;
         }
     }
 }

@@ -1,20 +1,20 @@
 package com.gildedrose.item
 
-class BackstagePassesItem(name: String, sellIn: Int, quality: Int) : Item(name, sellIn, quality) {
-    override fun updateYourState() {
-        sellIn -= 1;
+class BackstagePassesItem(val item: Item) : CustomizedItem {
+    override fun updateState() {
+        item.sellIn -= 1;
         when {
-            sellIn >= 11 -> {
-                quality += 1;
+            item.sellIn >= 11 -> {
+                item.quality += 1;
             }
-            sellIn > 5 -> {
-                quality += 2;
+            item.sellIn > 5 -> {
+                item.quality += 2;
             }
-            sellIn > 0 -> {
-                quality += 3;
+            item.sellIn > 0 -> {
+                item.quality += 3;
             }
             else -> {
-                quality = 0;
+                item.quality = 0;
             }
         }
     }

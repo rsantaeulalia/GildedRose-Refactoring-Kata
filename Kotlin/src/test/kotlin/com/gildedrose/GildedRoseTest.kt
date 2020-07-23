@@ -35,17 +35,10 @@ class GildedRoseTest {
     }
 
     @Test
-    fun sulfurasItemDoesNotDecreaseSellByDayNumberEachTime() {
-        val app = newGildedRose("Sulfuras, Hand of Ragnaros", 0, 0)
-        app.updateQuality()
-        assertEquals(0, itemSellByDayNumber(app))
-    }
-
-    @Test
     fun brieIncreasesInQualityEachTime() {
         val app = newGildedRose("Aged Brie", 1, 1)
         app.updateQuality()
-        assertEquals(2, itemQualityNumber(app))
+        assertEquals(2, itemQualityValue(app))
     }
 
     @Test
@@ -53,63 +46,76 @@ class GildedRoseTest {
         val app = newGildedRose("Aged Brie", 1, 49)
         app.updateQuality()
         app.updateQuality()
-        assertEquals(50, itemQualityNumber(app))
+        assertEquals(50, itemQualityValue(app))
     }
 
     @Test
     fun backstagePassesItemDecreasesQualityByOneIfSellByDayMoreThanEleven() {
         val app = newGildedRose("Backstage passes to a TAFKAL80ETC concert", 12, 1)
         app.updateQuality()
-        assertEquals(2, itemQualityNumber(app))
+        assertEquals(2, itemQualityValue(app))
     }
 
     @Test
-    fun backstagePassesItemDecreasesQualityByTwoIfSellByDayLessThanEleven() {
+    fun backstagePassesItemDecreasesQualityByTwoIfSellByDayIsMoreThanSix() {
         val app = newGildedRose("Backstage passes to a TAFKAL80ETC concert", 10, 1)
         app.updateQuality()
-        assertEquals(3, itemQualityNumber(app))
+        assertEquals(3, itemQualityValue(app))
     }
 
     @Test
-    fun backstagePassesItemDecreasesQualityByThreeIfSellByDayLessThanSix() {
+    fun backstagePassesItemDecreasesQualityByThreeIfSellByDayIsMoreThanZero() {
         val app = newGildedRose("Backstage passes to a TAFKAL80ETC concert", 5, 1)
         app.updateQuality()
-        assertEquals(4, itemQualityNumber(app))
+        assertEquals(4, itemQualityValue(app))
     }
 
     @Test
-    fun backstagePassesItemQualityDropsToZeroIfSellByDayHasPassed() {
+    fun backstagePassesItemQualityDropsToZeroIfSellByDayIsZeroOrLess() {
         val app = newGildedRose("Backstage passes to a TAFKAL80ETC concert", 0, 50)
         app.updateQuality()
-        assertEquals(0, itemQualityNumber(app))
+        assertEquals(0, itemQualityValue(app))
     }
 
     @Test
-    fun normalItemDecreasesQualityByOneIfSellByDayIsAboveZero() {
+    fun backstagePassesItemQualityCannotGoAboveFiftyWhenIncreasing() {
+        val app = newGildedRose("Backstage passes to a TAFKAL80ETC concert", 5, 50)
+        app.updateQuality()
+        assertEquals(50, itemQualityValue(app))
+    }
+
+    @Test
+    fun standardItemDecreasesQualityByOneIfSellByDayIsAboveZero() {
         val app = newGildedRose("foo", 2, 1)
         app.updateQuality()
-        assertEquals(0, itemQualityNumber(app))
+        assertEquals(0, itemQualityValue(app))
     }
 
     @Test
-    fun normalItemDecreasesQualityByTwoOnceSellByDayHasPassed() {
+    fun standardItemDecreasesQualityByTwoOnceSellByDayIsZeroOrLess() {
         val app = newGildedRose("foo", 0, 5)
         app.updateQuality()
-        assertEquals(3, itemQualityNumber(app))
+        assertEquals(3, itemQualityValue(app))
     }
 
     @Test
-    fun normalItemCannotHaveQualityBelowZero() {
+    fun standardItemCannotHaveQualityBelowZero() {
         val app = newGildedRose("foo", 0, 0)
         app.updateQuality()
-        assertEquals(0, itemQualityNumber(app))
+        assertEquals(0, itemQualityValue(app))
     }
 
     @Test
-    fun nothingHappensToSulfurasItem() {
-        val app = newGildedRose("Sulfuras, Hand of Ragnaros", 1, 1)
+    fun sulfurasHasQualityEighty() {
+        val app = newGildedRose("Sulfuras, Hand of Ragnaros", 1, 80)
+        assertEquals(80, itemQualityValue(app))
+    }
+
+    @Test
+    fun sulfurasItemDoesNotAlterValues() {
+        val app = newGildedRose("Sulfuras, Hand of Ragnaros", 1, 80)
         app.updateQuality()
-        assertEquals(1, itemQualityNumber(app))
+        assertEquals(80, itemQualityValue(app));
         assertEquals(1, itemSellByDayNumber(app))
     }
 
@@ -122,7 +128,7 @@ class GildedRoseTest {
         return app.items[0].sellIn
     }
 
-    private fun itemQualityNumber(app: GildedRose): Int {
+    private fun itemQualityValue(app: GildedRose): Int {
         return app.items[0].quality
     }
 }
