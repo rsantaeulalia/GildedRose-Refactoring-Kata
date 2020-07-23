@@ -1,15 +1,21 @@
 package com.gildedrose.item
 
-class ItemFactory {
+class CustomizedItemFactory {
+    companion object {
+        val SULFURAS = "Sulfuras, Hand of Ragnaros"
+        val BRIE = "Aged Brie"
+        val BACKSTAGE_PASSES_ITEM = "Backstage passes to a TAFKAL80ETC concert"
+    }
+
     fun customiseItem(item: Item): CustomizedItem {
         return when (item.name) {
-            "Sulfuras, Hand of Ragnaros" -> {
+            SULFURAS -> {
                 SulfurasItem(item)
             }
-            "Aged Brie" -> {
+            BRIE -> {
                 AgedBrie(item)
             }
-            "Backstage passes to a TAFKAL80ETC concert" -> {
+            BACKSTAGE_PASSES_ITEM -> {
                 BackstagePassesItem(item)
             }
             else -> {
