@@ -119,6 +119,34 @@ class GildedRoseTest {
         assertEquals(1, itemSellByDayNumber(app))
     }
 
+    @Test
+    fun conjuredItemDecreasesSellByDayNumberEachTime() {
+        val app = newGildedRose(CustomizedItemFactory.CONJURED_ITEM, 0, 0)
+        app.updateQuality()
+        assertEquals(-1, itemSellByDayNumber(app))
+    }
+
+    @Test
+    fun conjuredItemDecreasesQualityByTwoIfSellByDayIsAboveZero() {
+        val app = newGildedRose(CustomizedItemFactory.CONJURED_ITEM, 2, 5)
+        app.updateQuality()
+        assertEquals(3, itemQualityValue(app))
+    }
+
+    @Test
+    fun conjuredItemDecreasesQualityByFourOnceSellByDayIsZeroOrLess() {
+        val app = newGildedRose(CustomizedItemFactory.CONJURED_ITEM, 0, 5)
+        app.updateQuality()
+        assertEquals(1, itemQualityValue(app))
+    }
+
+    @Test
+    fun conjuredItemCannotHaveQualityBelowZero() {
+        val app = newGildedRose(CustomizedItemFactory.CONJURED_ITEM, 0, 0)
+        app.updateQuality()
+        assertEquals(0, itemQualityValue(app))
+    }
+
     private fun newGildedRose(itemName: String, itemSellIn: Int, itemQuality: Int): GildedRose {
         val items = arrayOf(Item(itemName, itemSellIn, itemQuality))
         return GildedRose(items, CustomizedItemFactory())
