@@ -1,5 +1,8 @@
 package com.gildedrose
 
+import com.gildedrose.item.Item
+import com.gildedrose.item.ItemFactory
+
 fun main(args: Array<String>) {
 
     println("OMGHAI!")
@@ -15,14 +18,14 @@ fun main(args: Array<String>) {
             // this conjured item does not work properly yet
             Item("Conjured Mana Cake", 3, 6))
 
-    val app = GildedRose(items)
+    val app = GildedRose(items, ItemFactory())
 
     var days = 2
     if (args.size > 0) {
         days = Integer.parseInt(args[0]) + 1
     }
 
-    for (i in 0..days - 1) {
+    for (i in 0 until days) {
         println("-------- day $i --------")
         println("name, sellIn, quality")
         for (item in items) {

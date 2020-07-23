@@ -1,5 +1,7 @@
 package com.gildedrose
 
+import com.gildedrose.item.Item
+import com.gildedrose.item.ItemFactory
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -113,7 +115,7 @@ class GildedRoseTest {
 
     private fun newGildedRose(itemName: String, itemSellIn: Int, itemQuality: Int): GildedRose {
         val items = arrayOf(Item(itemName, itemSellIn, itemQuality))
-        return GildedRose(items)
+        return GildedRose(items, ItemFactory())
     }
 
     private fun itemSellByDayNumber(app: GildedRose): Int {
