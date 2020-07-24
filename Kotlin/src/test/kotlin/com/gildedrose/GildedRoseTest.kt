@@ -5,6 +5,7 @@ import com.gildedrose.item.Item
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
+
 class GildedRoseTest {
     @Test
     fun foo() {
@@ -30,6 +31,13 @@ class GildedRoseTest {
     @Test
     fun backstagePassesItemDecreasesSellByDayNumberEachTime() {
         val app = newGildedRose(CustomizedItemFactory.BACKSTAGE_PASSES_ITEM, 0, 0)
+        app.updateQuality()
+        assertEquals(-1, itemSellByDayNumber(app))
+    }
+
+    @Test
+    fun conjuredItemDecreasesSellByDayNumberEachTime() {
+        val app = newGildedRose(CustomizedItemFactory.CONJURED_ITEM, 0, 0)
         app.updateQuality()
         assertEquals(-1, itemSellByDayNumber(app))
     }
@@ -115,15 +123,8 @@ class GildedRoseTest {
     fun sulfurasItemDoesNotAlterValues() {
         val app = newGildedRose(CustomizedItemFactory.SULFURAS, 1, 80)
         app.updateQuality()
-        assertEquals(80, itemQualityValue(app));
+        assertEquals(80, itemQualityValue(app))
         assertEquals(1, itemSellByDayNumber(app))
-    }
-
-    @Test
-    fun conjuredItemDecreasesSellByDayNumberEachTime() {
-        val app = newGildedRose(CustomizedItemFactory.CONJURED_ITEM, 0, 0)
-        app.updateQuality()
-        assertEquals(-1, itemSellByDayNumber(app))
     }
 
     @Test
@@ -149,7 +150,7 @@ class GildedRoseTest {
 
     private fun newGildedRose(itemName: String, itemSellIn: Int, itemQuality: Int): GildedRose {
         val items = arrayOf(Item(itemName, itemSellIn, itemQuality))
-        return GildedRose(items, CustomizedItemFactory())
+        return GildedRose(items)
     }
 
     private fun itemSellByDayNumber(app: GildedRose): Int {
