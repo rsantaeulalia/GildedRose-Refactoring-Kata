@@ -10,7 +10,7 @@ class CustomizedItemFactory {
 
     fun customiseItem(item: Item): CustomizedItem {
         return when (item.name) {
-            SULFURAS -> SulfurasItem(item)
+            SULFURAS -> SulfurasItem()
             BRIE -> AgedBrie(item)
             BACKSTAGE_PASSES_ITEM -> BackstagePassesItem(item)
             CONJURED_ITEM -> ConjuredItem(item)

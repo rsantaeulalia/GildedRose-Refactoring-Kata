@@ -1,7 +1,6 @@
 package com.gildedrose.item
 
-class SulfurasItem(val item: Item) : CustomizedItem {
+class SulfurasItem : CustomizedItem {
     override fun updateState() {
-
     }
 }

@@ -1,12 +1,28 @@
 package com.gildedrose.item
 
-class StandardItem(val item: Item) : CustomizedItem {
+open class StandardItem(private val item: Item) : CustomizedItem {
     override fun updateState() {
-        item.sellIn -= 1;
-        if (item.sellIn > 0) {
-            item.quality -= 1;
+        decreaseSellByDayValueByOne();
+        if (sellByDayValueIsOverZero()) {
+            decreaseQualityBy(decreasingValueOverZeroDaysToSell());
         } else {
-            item.quality -= 2;
+            decreaseQualityBy(decreasingValueForZeroOrLessDaysToSell());
         }
+    }
+
+    private fun decreaseSellByDayValueByOne() {
+        item.sellIn -= 1
+    }
+
+    private fun sellByDayValueIsOverZero() = item.sellIn > 0
+
+    private fun decreaseQualityBy(qualityValue: Int) {
+        item.quality -= qualityValue
+    }
+
+    open fun decreasingValueOverZeroDaysToSell(): Int = 1
+
+    private fun decreasingValueForZeroOrLessDaysToSell(): Int {
+        return decreasingValueOverZeroDaysToSell() * 2
     }
 }

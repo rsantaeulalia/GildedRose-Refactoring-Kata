@@ -1,21 +1,27 @@
 package com.gildedrose.item
 
-class BackstagePassesItem(val item: Item) : CustomizedItem {
+class BackstagePassesItem(private val item: Item) : CustomizedItem {
     override fun updateState() {
-        item.sellIn -= 1;
+        decreaseSellByDayValueByOne();
         when {
-            item.sellIn >= 11 -> {
-                item.quality += 1;
-            }
-            item.sellIn > 5 -> {
-                item.quality += 2;
-            }
-            item.sellIn > 0 -> {
-                item.quality += 3;
-            }
-            else -> {
-                item.quality = 0;
-            }
+            sellByDayValueIsOver(10) -> increaseQualityBy(1)
+            sellByDayValueIsOver(5) -> increaseQualityBy(2)
+            sellByDayValueIsOver(0) -> increaseQualityBy(3)
+            else -> dropQualityToZero()
         }
+    }
+
+    private fun decreaseSellByDayValueByOne() {
+        item.sellIn -= 1
+    }
+
+    private fun sellByDayValueIsOver(dayNumber: Int)= item.sellIn > dayNumber
+
+    private fun increaseQualityBy(qualityValue: Int) {
+        item.quality += qualityValue
+    }
+
+    private fun dropQualityToZero() {
+        item.quality = 0
     }
 }

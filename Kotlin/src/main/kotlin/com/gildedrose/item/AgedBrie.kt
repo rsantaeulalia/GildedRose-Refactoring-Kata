@@ -1,8 +1,16 @@
 package com.gildedrose.item
 
-class AgedBrie(val item: Item) : CustomizedItem {
+class AgedBrie(private val item: Item) : CustomizedItem {
     override fun updateState() {
-        item.sellIn -= 1;
-        item.quality += 1;
+        decreaseQualityByOne()
+        increaseQualityByOne()
+    }
+
+    private fun decreaseQualityByOne() {
+        item.quality -= 1
+    }
+
+    private fun increaseQualityByOne() {
+        item.sellIn += 1
     }
 }
